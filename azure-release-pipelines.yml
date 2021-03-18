@@ -1,0 +1,40 @@
+# Starter pipeline
+# Start with a minimal pipeline that you can customize to build and deploy your code.
+# Add steps that build, run tests, deploy, and more:
+# https://aka.ms/yaml
+
+trigger:
+- none
+
+pr: none
+resources:
+ pipelines:
+   - pipeline: identity-access-management-ci
+     source: teom10/identity-access-management-ci
+     trigger:
+      branches:
+      - trunk
+
+pool:
+  vmImage: ubuntu-latest
+
+steps:
+- script: echo Hello, world!
+  displayName: 'Run a one-line script'
+
+- script: |
+    echo Add other tasks to build, test, and deploy your project.
+    echo See https://aka.ms/yaml
+  displayName: 'Run a multi-line script'
+  
+- task: AzureRmWebAppDeployment@4
+  inputs:
+    ConnectionType: 'AzureRM'
+    azureSubscription: 'Suscripción de Visual Studio Enterprise(9cf87bc8-69fd-42b2-bd98-a7c1adf50f63)'
+    appType: 'webAppLinux'
+    WebAppName: 'api-eyes'
+    deployToSlotOrASE: true
+    ResourceGroupName: 'labdevops'
+    SlotName: 'pre'
+    packageForLinux: '$(System.DefaultWorkingDirectory)/**/*.zip'
+    RuntimeStack: 'DOTNETCORE|5.0'
