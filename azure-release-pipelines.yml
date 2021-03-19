@@ -19,12 +19,20 @@ pool:
   vmImage: ubuntu-latest
 
 steps:
-- script: echo Hello, world!
-  displayName: 'Run a one-line script'
+- script: |
+    echo $(resources.pipeline.myresourcevars.pipelineID)
+    echo $(resources.pipeline.myresourcevars.runName)
+    echo $(resources.pipeline.myresourcevars.runID)
+    echo $(resources.pipeline.myresourcevars.runURI)
+    echo $(resources.pipeline.myresourcevars.sourceBranch)
+    echo $(resources.pipeline.myresourcevars.sourceCommit)
+    echo $(resources.pipeline.myresourcevars.sourceProvider)
+    echo $(resources.pipeline.myresourcevars.requestedFor)
+    echo $(resources.pipeline.myresourcevars.requestedForID)
 
 - script: |
     echo Add other tasks to build, test, and deploy your project.
-    ls $(PIPELINE.WORKSPACE)/identity-access-management-ci/
+    ls $(PIPELINE.WORKSPACE)
   displayName: 'Run a multi-line script'
   
 - task: AzureRmWebAppDeployment@4
