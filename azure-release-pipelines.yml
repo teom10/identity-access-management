@@ -64,7 +64,6 @@ stages:
               packageForLinux: '$(Pipeline.Workspace)/**/*.zip'
               RuntimeStack: 'DOTNETCORE|5.0'
     
-stages:
 - stage: Prod
   displayName: 'Prod Deployment'
   jobs:    
