@@ -20,15 +20,15 @@ pool:
 
 steps:
 - script: |
-    echo '$(resources.pipeline.myresourcevars.pipelineID)'
-    echo '$(resources.pipeline.myresourcevars.runName)'
-    echo $(resources.pipeline.myresourcevars.runID)
-    echo $(resources.pipeline.myresourcevars.runURI)
-    echo $(resources.pipeline.myresourcevars.sourceBranch)
-    echo $(resources.pipeline.myresourcevars.sourceCommit)
-    echo $(resources.pipeline.myresourcevars.sourceProvider)
-    echo $(resources.pipeline.myresourcevars.requestedFor)
-    echo $(resources.pipeline.myresourcevars.requestedForID)
+    echo '$(resources.pipeline.identity-access-management-ci.pipelineID)'
+    echo '$(resources.pipeline.identity-access-management-ci.runName)'
+    echo $(resources.pipeline.identity-access-management-ci.runID)
+    echo $(resources.pipeline.identity-access-management-ci.runURI)
+    echo $(resources.pipeline.identity-access-management-ci.sourceBranch)
+    echo $(resources.pipeline.identity-access-management-ci.sourceCommit)
+    echo $(resources.pipeline.identity-access-management-ci.sourceProvider)
+    echo $(resources.pipeline.identity-access-management-ci.requestedFor)
+    echo $(resources.pipeline.identity-access-management-ci.requestedForID)
 
 - script: |
     echo Add other tasks to build, test, and deploy your project.
@@ -56,5 +56,5 @@ steps:
     deployToSlotOrASE: true
     ResourceGroupName: 'labdevops'
     SlotName: 'pre'
-    packageForLinux: '$(System.DefaultWorkingDirectory)/**/*.zip'
+    packageForLinux: '$(Pipeline.Workspace)/**/*.zip'
     RuntimeStack: 'DOTNETCORE|5.0'
