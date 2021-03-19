@@ -24,7 +24,7 @@ steps:
 
 - script: |
     echo Add other tasks to build, test, and deploy your project.
-    echo See https://aka.ms/yaml
+    ls $(PIPELINE.WORKSPACE)/identity-access-management-ci/
   displayName: 'Run a multi-line script'
   
 - task: AzureRmWebAppDeployment@4
