@@ -10,7 +10,7 @@ pr: none
 resources:
  pipelines:
    - pipeline: identity-access-management-ci
-     source: teom10/identity-access-management-ci
+     source: identity-access-management-ci
      trigger:
       branches:
       - trunk
