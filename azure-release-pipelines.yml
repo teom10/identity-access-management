@@ -18,38 +18,48 @@ resources:
 pool:
   vmImage: ubuntu-latest
 
-steps:
-- script: |
-    echo '$(resources.pipeline.identity-access-management-ci.pipelineID)'
-    echo '$(resources.pipeline.identity-access-management-ci.runName)'
-    echo $(resources.pipeline.identity-access-management-ci.runID)
-    echo $(resources.pipeline.identity-access-management-ci.runURI)
-    echo $(resources.pipeline.identity-access-management-ci.sourceBranch)
-    echo $(resources.pipeline.identity-access-management-ci.sourceCommit)
-    echo $(resources.pipeline.identity-access-management-ci.sourceProvider)
-    echo $(resources.pipeline.identity-access-management-ci.requestedFor)
-    echo $(resources.pipeline.identity-access-management-ci.requestedForID)
+stages:
+- stage: Deploy
+  displayName: 'Deployment'
+  jobs:
+    - deployment: deploy
+      environment: 'IdentityDev'
+      displayName: 'Running Deploy'
+      strategy:
+       runOnce:
+         deploy:
+          steps:
+          - script: |
+              echo '$(resources.pipeline.identity-access-management.pipelineID)'
+              echo '$(resources.pipeline.identity-access-management.runName)'
+              echo $(resources.pipeline.identity-access-management.runID)
+              echo $(resources.pipeline.identity-access-management.runURI)
+              echo $(resources.pipeline.identity-access-management.sourceBranch)
+              echo $(resources.pipeline.identity-access-management.sourceCommit)
+              echo $(resources.pipeline.identity-access-management.sourceProvider)
+              echo $(resources.pipeline.identity-access-management.requestedFor)
+              echo $(resources.pipeline.identity-access-management.requestedForID)
 
-- script: |
-    echo Add other tasks to build, test, and deploy your project.
-    ls $(PIPELINE.WORKSPACE)
-  displayName: 'Run a multi-line script'
+          - script: |
+              echo Add other tasks to build, test, and deploy your project.
+              ls $(PIPELINE.WORKSPACE)
+            displayName: 'Run a multi-line script'
 
-- download: identity-access-management
-  artifact: drop
-  patterns: '**/*.zip'
+          - download: identity-access-management
+            artifact: drop
+            patterns: '**/*.zip'
 
-- script: |
-    ls $(PIPELINE.WORKSPACE)
-  displayName: 'Run a multi-line script'
-- task: AzureRmWebAppDeployment@4
-  inputs:
-    ConnectionType: 'AzureRM'
-    azureSubscription: 'Suscripción de Visual Studio Enterprise(9cf87bc8-69fd-42b2-bd98-a7c1adf50f63)'
-    appType: 'webAppLinux'
-    WebAppName: 'api-eyes'
-    deployToSlotOrASE: true
-    ResourceGroupName: 'labdevops'
-    SlotName: 'pre'
-    packageForLinux: '$(Pipeline.Workspace)/**/*.zip'
-    RuntimeStack: 'DOTNETCORE|5.0'
+          - script: |
+              ls $(PIPELINE.WORKSPACE)
+            displayName: 'Run a multi-line script'
+          - task: AzureRmWebAppDeployment@4
+            inputs:
+              ConnectionType: 'AzureRM'
+              azureSubscription: 'Suscripción de Visual Studio Enterprise(9cf87bc8-69fd-42b2-bd98-a7c1adf50f63)'
+              appType: 'webAppLinux'
+              WebAppName: 'api-eyes'
+              deployToSlotOrASE: true
+              ResourceGroupName: 'labdevops'
+              SlotName: 'pre'
+              packageForLinux: '$(Pipeline.Workspace)/**/*.zip'
+              RuntimeStack: 'DOTNETCORE|5.0'
