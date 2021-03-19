@@ -71,19 +71,18 @@ stages:
       environment: 'IdentityProd'
       displayName: 'Running production deploy'
       strategy:
-        runOnce:
-          deploy:
-          steps:
+       runOnce:
+        deploy:
+         steps:
+         - download: identity-access-management
+           artifact: drop
+           patterns: '**/*.zip'
 
-          - download: identity-access-management
-            artifact: drop
-            patterns: '**/*.zip'
-
-          - task: AzureRmWebAppDeployment@4
-            inputs:
-              ConnectionType: 'AzureRM'
-              azureSubscription: 'Suscripción de Visual Studio Enterprise(9cf87bc8-69fd-42b2-bd98-a7c1adf50f63)'
-              appType: 'webAppLinux'
-              WebAppName: 'api-eyes'
-              packageForLinux: '$(Pipeline.Workspace)/**/*.zip'
-              RuntimeStack: 'DOTNETCORE|5.0'
+         - task: AzureRmWebAppDeployment@4
+           inputs:
+             ConnectionType: 'AzureRM'
+             azureSubscription: 'Suscripción de Visual Studio Enterprise(9cf87bc8-69fd-42b2-bd98-a7c1adf50f63)'
+             appType: 'webAppLinux'
+             WebAppName: 'api-eyes'
+             packageForLinux: '$(Pipeline.Workspace)/**/*.zip'
+             RuntimeStack: 'DOTNETCORE|5.0'
