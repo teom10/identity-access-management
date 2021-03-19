@@ -20,8 +20,8 @@ pool:
 
 steps:
 - script: |
-    echo $(resources.pipeline.myresourcevars.pipelineID)
-    echo $(resources.pipeline.myresourcevars.runName)
+    echo '$(resources.pipeline.myresourcevars.pipelineID)'
+    echo '$(resources.pipeline.myresourcevars.runName)'
     echo $(resources.pipeline.myresourcevars.runID)
     echo $(resources.pipeline.myresourcevars.runURI)
     echo $(resources.pipeline.myresourcevars.sourceBranch)
@@ -35,6 +35,18 @@ steps:
     ls $(PIPELINE.WORKSPACE)
   displayName: 'Run a multi-line script'
   
+- task: DownloadPipelineArtifact@2
+  inputs:
+    buildType: 'specific'
+    project: '3544afe9-177c-4237-9bf1-539d8b87cf74'
+    definition: '9'
+    specificBuildWithTriggering: true
+    buildVersionToDownload: 'latest'
+    targetPath: '$(Pipeline.Workspace)'
+
+- script: |
+    ls $(PIPELINE.WORKSPACE)
+  displayName: 'Run a multi-line script'
 - task: AzureRmWebAppDeployment@4
   inputs:
     ConnectionType: 'AzureRM'
