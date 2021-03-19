@@ -19,10 +19,10 @@ pool:
   vmImage: ubuntu-latest
 
 stages:
-- stage: Deploy
-  displayName: 'Deployment'
+- stage: Slot
+  displayName: 'Slot Deployment'
   jobs:
-    - deployment: deploy
+    - deployment: slot
       environment: 'IdentityDev'
       displayName: 'Running Deploy'
       strategy:
@@ -61,5 +61,30 @@ stages:
               deployToSlotOrASE: true
               ResourceGroupName: 'labdevops'
               SlotName: 'pre'
+              packageForLinux: '$(Pipeline.Workspace)/**/*.zip'
+              RuntimeStack: 'DOTNETCORE|5.0'
+    
+stages:
+- stage: Prod
+  displayName: 'Prod Deployment'
+  jobs:    
+    - deployment: prod
+      environment: 'IdentityProd'
+      displayName: 'Running production deploy'
+      strategy:
+        runOnce:
+          deploy:
+          steps:
+
+          - download: identity-access-management
+            artifact: drop
+            patterns: '**/*.zip'
+
+          - task: AzureRmWebAppDeployment@4
+            inputs:
+              ConnectionType: 'AzureRM'
+              azureSubscription: 'Suscripción de Visual Studio Enterprise(9cf87bc8-69fd-42b2-bd98-a7c1adf50f63)'
+              appType: 'webAppLinux'
+              WebAppName: 'api-eyes'
               packageForLinux: '$(Pipeline.Workspace)/**/*.zip'
               RuntimeStack: 'DOTNETCORE|5.0'
