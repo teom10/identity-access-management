@@ -26,8 +26,57 @@ stages:
       pool: server
       steps:
         - task: ManualValidation@0
+          name: mv
           inputs:
             instructions: 'validate'
+        - task: InvokeRESTAPI@1
+          condition: 
+          inputs:
+            connectionType: 'connectedServiceName'
+            method: 'POST'
+            headers: |
+              {
+              "Content-Type":"application/json"
+              }
+            body: |
+              {
+                "@context": "https://schema.org/extensions",
+                "@type": "MessageCard",
+                "themeColor": "0072C6",
+                "title": "Custom message from yaml pipeline",
+                "text": "Click **Learn More** to learn more about Actionable Messages!",
+                "potentialAction": [
+                  {
+                    "@type": "ActionCard",
+                    "name": "Send Feedback",
+                    "inputs": [
+                      {
+                        "@type": "TextInput",
+                        "id": "feedback",
+                        "isMultiline": true,
+                        "title": "Let us know what you think about Actionable Messages"
+                      }
+                    ],
+                    "actions": [
+                      {
+                        "@type": "HttpPOST",
+                        "name": "Send Feedback",
+                        "isPrimary": true,
+                        "target": "http://..."
+                      }
+                    ]
+                  },
+                  {
+                    "@type": "OpenUri",
+                    "name": "Learn More",
+                    "targets": [
+                      { "os": "default", "uri": "https://docs.microsoft.com/outlook/actionable-messages" }
+                    ]
+                  }
+                ]
+              }
+            urlSuffix: 'https://revtrak.webhook.office.com/webhookb2/a84afc04-eb90-4de1-83fc-7bcafb6af35a@2d102298-7d79-441a-8a46-37684b87fbe9/IncomingWebhook/c111bb97ccc842cbb2786dc6f6fb6e06/5ec33c34-7586-43fe-b8ca-2f085f9936d6'
+            waitForCompletion: 'false'
     - deployment: slot
       environment: 'IdentityDev'
       displayName: 'Running Deploy'
