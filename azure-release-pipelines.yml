@@ -73,7 +73,7 @@ stages:
                           "targets": [
                               {
                                   "os": "default",
-                                  "uri": "$(System.CollectionUri)$(System.TeamProject)/_build?definitionId=$(Build.BuildId)"
+                                  "uri": "$(System.CollectionUri)$(System.TeamProject)/_build/results?buildId=$(Build.BuildId)"
                               }
                           ]
                       }
