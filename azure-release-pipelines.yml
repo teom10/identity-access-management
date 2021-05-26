@@ -41,11 +41,11 @@ stages:
                   "themeColor": "0076D7",
                   "summary": "Release Pipeline Notification",
                   "title": "Manual Validation",
-                  "text": "Build Number validation has failed please click in **View Release** button to open",
+                  "text": "Build Number validation has failed please click **View Release** to open details",
                   "sections": [
                       {
                           "activityTitle": "$(Build.DefinitionName)",
-                          "activitySubtitle": "deployed to $(Environment.Name)",
+                          "activitySubtitle": "deployed to $(System.StageName)",
                           "activityImage": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTy5ihdbdBvYPJ6cEoJFkF6ED9I7LnoaP22yg&usqp=CAU",
                           "facts": [
                               {
