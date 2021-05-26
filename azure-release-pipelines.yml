@@ -26,7 +26,6 @@ stages:
       pool: server
       steps:
         - task: InvokeRESTAPI@1
-          condition: 
           inputs:
             connectionType: 'connectedServiceName'
             method: 'POST'
