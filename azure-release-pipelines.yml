@@ -40,6 +40,8 @@ stages:
                   "@context": "http://schema.org/extensions",
                   "themeColor": "0076D7",
                   "summary": "Release Pipeline Notification",
+                  "title": "Manual Validation",
+                  "text": "Build Number validation has failed please click in **View Release** button to open",
                   "sections": [
                       {
                           "activityTitle": "$(Build.DefinitionName)",
@@ -73,7 +75,7 @@ stages:
                           "targets": [
                               {
                                   "os": "default",
-                                  "uri": "$(System.CollectionUri)$(System.TeamProject)/_build/results?buildId=$(Build.BuildId)"
+                                  "uri": "$(System.CollectionUri)$(System.TeamProject)/_build/results?buildId=$(Build.BuildId)&view=results"
                               }
                           ]
                       }
