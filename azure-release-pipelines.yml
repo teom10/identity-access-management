@@ -25,10 +25,6 @@ stages:
     - job: notify
       pool: server
       steps:
-        - task: ManualValidation@0
-          name: mv
-          inputs:
-            instructions: 'validate'
         - task: InvokeRESTAPI@1
           condition: 
           inputs:
@@ -77,6 +73,10 @@ stages:
               }
             urlSuffix: 'https://revtrak.webhook.office.com/webhookb2/a84afc04-eb90-4de1-83fc-7bcafb6af35a@2d102298-7d79-441a-8a46-37684b87fbe9/IncomingWebhook/c111bb97ccc842cbb2786dc6f6fb6e06/5ec33c34-7586-43fe-b8ca-2f085f9936d6'
             waitForCompletion: 'false'
+        - task: ManualValidation@0
+          name: mv
+          inputs:
+            instructions: 'validate'
     - deployment: slot
       environment: 'IdentityDev'
       displayName: 'Running Deploy'
