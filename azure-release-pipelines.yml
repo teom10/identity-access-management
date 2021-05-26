@@ -22,6 +22,12 @@ stages:
 - stage: Slot
   displayName: 'Slot Deployment'
   jobs:
+    - job: notify
+      pool: server
+      steps:
+        - task: ManualValidation@0
+          inputs:
+            instructions: 'validate'
     - deployment: slot
       environment: 'IdentityDev'
       displayName: 'Running Deploy'
@@ -48,7 +54,6 @@ stages:
           - download: identity-access-management
             artifact: drop
             patterns: '**/*.zip'
-
           - script: |
               ls $(PIPELINE.WORKSPACE)
             displayName: 'Run a multi-line script'
