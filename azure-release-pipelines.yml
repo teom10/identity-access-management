@@ -61,14 +61,7 @@ stages:
                               {
                                   "name": "Requested For:",
                                   "value": "$(Build.RequestedFor)"
-                              },
-                              {
-                                  "name": "Date & Time:",
-                                  "value": "$(Release.Deployment.Starttime)"
-                              },
-              				{
-              					"name": "URL",
-              					"value": "$(Build.BuildUri)"
+                              }
                           ],
                           "markdown": true
                       }
