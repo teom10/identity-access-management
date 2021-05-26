@@ -28,6 +28,7 @@ stages:
         - task: InvokeRESTAPI@1
           inputs:
             connectionType: 'connectedServiceName'
+            serviceConnection: 'NotifyManualReview'
             method: 'POST'
             headers: |
               {
