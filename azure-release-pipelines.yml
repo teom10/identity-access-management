@@ -36,40 +36,66 @@ stages:
               }
             body: |
               {
-                "@context": "https://schema.org/extensions",
-                "@type": "MessageCard",
-                "themeColor": "0072C6",
-                "title": "Custom message from yaml pipeline",
-                "text": "Click **Learn More** to learn more about Actionable Messages!",
-                "potentialAction": [
-                  {
-                    "@type": "ActionCard",
-                    "name": "Send Feedback",
-                    "inputs": [
+                  "@type": "MessageCard",
+                  "@context": "http://schema.org/extensions",
+                  "themeColor": "0076D7",
+                  "summary": "Release Pipeline Notification",
+                  "sections": [
                       {
-                        "@type": "TextInput",
-                        "id": "feedback",
-                        "isMultiline": true,
-                        "title": "Let us know what you think about Actionable Messages"
+                          "activityTitle": "$(Release.DefinitionName) ($(Release.version))",
+                          "activitySubtitle": "deployed to $(Release.Environmentname)",
+                          "activityImage": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTy5ihdbdBvYPJ6cEoJFkF6ED9I7LnoaP22yg&usqp=CAU",
+                          "facts": [
+                              {
+                                  "name": "Build",
+                                  "value": "$(Build.DefinitionName) - $(Build.BuildNumber)"
+                              },
+                              {
+                                  "name": "Release",
+                                  "value": "$(Release.ReleaseName)"
+                              },
+                              {
+                                  "name": "Branch",
+                                  "value": "$(Build.SourceBranchName)"
+                              },
+                              {
+                                  "name": "Commit",
+                                  "value": "$(Build.SourceVersion)"
+                              },
+                              {
+                                  "name": "Requested For:",
+                                  "value": "$(Release.RequestedFor)"
+                              },
+                              {
+                                  "name": "Date & Time:",
+                                  "value": "$(Release.Deployment.Starttime)"
+                              }
+                          ],
+                          "markdown": true
                       }
-                    ],
-                    "actions": [
+                  ],
+                  "potentialAction": [
                       {
-                        "@type": "HttpPOST",
-                        "name": "Send Feedback",
-                        "isPrimary": true,
-                        "target": "http://..."
+                          "@type": "OpenUri",
+                          "name": "View Release",
+                          "targets": [
+                              {
+                                  "os": "default",
+                                  "uri": "$(Release.ReleaseWebUrl)"
+                              }
+                          ]
+                      },
+                      {
+                          "@type": "OpenUri",
+                          "name": "View Published URL",
+                          "targets": [
+                              {
+                                  "os": "default",
+                                  "uri": "$(Release.PublishedUrl)"
+                              }
+                          ]
                       }
-                    ]
-                  },
-                  {
-                    "@type": "OpenUri",
-                    "name": "Learn More",
-                    "targets": [
-                      { "os": "default", "uri": "https://docs.microsoft.com/outlook/actionable-messages" }
-                    ]
-                  }
-                ]
+                  ]
               }
             waitForCompletion: 'false'
         - task: ManualValidation@0
