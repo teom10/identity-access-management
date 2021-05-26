@@ -80,17 +80,7 @@ stages:
                           "targets": [
                               {
                                   "os": "default",
-                                  "uri": "$(Build.BuildUri)"
-                              }
-                          ]
-                      },
-                      {
-                          "@type": "OpenUri",
-                          "name": "View Published URL",
-                          "targets": [
-                              {
-                                  "os": "default",
-                                  "uri": "$(Build.BuildUri)"
+                                  "uri": "$(System.CollectionUri)$(System.TeamProject)/_build?definitionId=$(Build.BuildId)"
                               }
                           ]
                       }
