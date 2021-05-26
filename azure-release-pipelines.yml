@@ -45,7 +45,7 @@ stages:
                   "sections": [
                       {
                           "activityTitle": "$(Build.DefinitionName)",
-                          "activitySubtitle": "deployed to $(System.StageName)",
+                          "activitySubtitle": "Stage: $(System.StageDisplayName)",
                           "activityImage": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTy5ihdbdBvYPJ6cEoJFkF6ED9I7LnoaP22yg&usqp=CAU",
                           "facts": [
                               {
