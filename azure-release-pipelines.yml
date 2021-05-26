@@ -42,17 +42,13 @@ stages:
                   "summary": "Release Pipeline Notification",
                   "sections": [
                       {
-                          "activityTitle": "$(Release.DefinitionName) ($(Release.version))",
-                          "activitySubtitle": "deployed to $(Release.Environmentname)",
+                          "activityTitle": "$(Build.DefinitionName)",
+                          "activitySubtitle": "deployed to $(Environment.Name)",
                           "activityImage": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTy5ihdbdBvYPJ6cEoJFkF6ED9I7LnoaP22yg&usqp=CAU",
                           "facts": [
                               {
-                                  "name": "Build",
-                                  "value": "$(Build.DefinitionName) - $(Build.BuildNumber)"
-                              },
-                              {
                                   "name": "Release",
-                                  "value": "$(Release.ReleaseName)"
+                                  "value": "$(Build.BuildNumber)"
                               },
                               {
                                   "name": "Branch",
@@ -64,12 +60,15 @@ stages:
                               },
                               {
                                   "name": "Requested For:",
-                                  "value": "$(Release.RequestedFor)"
+                                  "value": "$(Build.RequestedFor)"
                               },
                               {
                                   "name": "Date & Time:",
                                   "value": "$(Release.Deployment.Starttime)"
-                              }
+                              },
+              				{
+              					"name": "URL",
+              					"value": "$(Build.BuildUri)"
                           ],
                           "markdown": true
                       }
@@ -81,7 +80,7 @@ stages:
                           "targets": [
                               {
                                   "os": "default",
-                                  "uri": "$(Release.ReleaseWebUrl)"
+                                  "uri": "$(Build.BuildUri)"
                               }
                           ]
                       },
@@ -91,7 +90,7 @@ stages:
                           "targets": [
                               {
                                   "os": "default",
-                                  "uri": "$(Release.PublishedUrl)"
+                                  "uri": "$(Build.BuildUri)"
                               }
                           ]
                       }
